@@ -34,4 +34,11 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'coredep'    
+    artifactName: 'coredep'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go(81e84b8a-f8b8-414d-ae7c-61908b042b5d)'
+    appType: 'webApp'
+    WebAppName: 'coredep'
+    packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
