@@ -7,39 +7,37 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  name: 'default'
 
 steps:
 - task: UseDotNet@2
+  displayName: 'Download .Net Core SDK'
   inputs:
     packageType: 'sdk'
     version: '3.1.x'
     performMultiLevelLookup: true
 - task: DotNetCoreCLI@2
+  displayName: 'Dotnet Restore'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
     verbosityRestore: 'Quiet'
 - task: DotNetCoreCLI@2
+  displayName: 'DotNet build'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '--configuration Release'
+    arguments: '--configuration Release -r linux-x64'
 - task: DotNetCoreCLI@2
+  displayName: 'DotNet Publish'
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) -r win10-x86'
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) -r linux-x64'
     zipAfterPublish: True
 - task: PublishBuildArtifacts@1
+  displayName: 'Upload Release'
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'coredep'
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Pay-As-You-Go(81e84b8a-f8b8-414d-ae7c-61908b042b5d)'
-    appType: 'webApp'
-    WebAppName: 'coredep'
-    packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
