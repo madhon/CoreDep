@@ -227,3 +227,5 @@ $RECYCLE.BIN/
 .DS_Store
 
 .idea/
+src/CoreDep/.vscode/launch.json
+src/CoreDep/.vscode/tasks.json
