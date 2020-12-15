@@ -14,7 +14,7 @@ steps:
   displayName: 'Download .Net Core SDK'
   inputs:
     packageType: 'sdk'
-    version: '3.1.x'
+    version: '5.0.x'
     performMultiLevelLookup: true
 - task: DotNetCoreCLI@2
   displayName: 'Dotnet Restore'
