@@ -28,13 +28,13 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '--configuration Release -r linux-x64'
+    arguments: '--configuration Release --no-restore'
 - task: DotNetCoreCLI@2
   displayName: 'DotNet Publish'
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) -r linux-x64'
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) --no-restore --no-build'
     zipAfterPublish: True
 - task: PublishBuildArtifacts@1
   displayName: 'Upload Release'
