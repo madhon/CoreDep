@@ -9,3 +9,7 @@ repos:
       hooks:
       -   id: talisman-commit
           name: talisman
+          language: system
+          pass_filenames: false
+          types: [text]
+          verbose: true
