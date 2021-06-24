@@ -39,3 +39,9 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'coredep'
+- task: OctopusPack@4
+  inputs:
+    PackageId: 'CoreDep'
+    PackageFormat: 'NuPkg'
+    PackageVersion: '1.0.$(Build.BuildId)'
+    SourcePath: '$(Build.ArtifactStagingDirectory)'
