@@ -33,7 +33,7 @@ steps:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) --no-restore --no-build'
-    zipAfterPublish: True
+    zipAfterPublish: false
 - task: PublishBuildArtifacts@1
   displayName: 'Upload Release'
   inputs:
