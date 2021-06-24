@@ -45,3 +45,9 @@ steps:
     PackageFormat: 'NuPkg'
     PackageVersion: '1.0.$(Build.BuildId)'
     SourcePath: '$(Build.ArtifactStagingDirectory)'
+- task: OctopusPush@4
+  inputs:
+    OctoConnectedServiceName: 'MadhonOctopus'
+    Space: 'Spaces-1'
+    Package: 'coredep.1.0.$(Build.BuildId).nupkg'
+    Replace: 'false'
