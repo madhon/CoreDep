@@ -49,5 +49,5 @@ steps:
   inputs:
     OctoConnectedServiceName: 'MadhonOctopus'
     Space: 'Spaces-1'
-    Package: 'coredep.1.0.$(Build.BuildId).nupkg'
+    Package: 'CoreDep.1.0.$(Build.BuildId).nupkg'
     Replace: 'false'
