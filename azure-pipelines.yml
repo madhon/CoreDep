@@ -12,7 +12,7 @@ steps:
   displayName: 'Download .Net Core SDK'
   inputs:
     packageType: 'sdk'
-    version: '5.0.x'
+    version: '6.0.x'
     performMultiLevelLookup: true
 - task: DotNetCoreCLI@2
   displayName: 'Dotnet Restore'
@@ -39,15 +39,3 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'coredep'
-- task: OctopusPack@4
-  inputs:
-    PackageId: 'CoreDep'
-    PackageFormat: 'NuPkg'
-    PackageVersion: '1.0.$(Build.BuildId)'
-    SourcePath: '$(Build.ArtifactStagingDirectory)'
-- task: OctopusPush@4
-  inputs:
-    OctoConnectedServiceName: 'MadhonOctopus'
-    Space: 'Spaces-1'
-    Package: 'CoreDep.1.0.$(Build.BuildId).nupkg'
-    Replace: 'false'
