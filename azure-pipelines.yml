@@ -1,13 +1,11 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
-
+ batch: true
+ branches:
+  include:
+    - master
+   
 pool:
-  name: 'default'
+  vmImage: 'ubuntu-20.04'
 
 steps:
 - task: UseDotNet@2
@@ -35,9 +33,21 @@ steps:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) --no-restore --no-build'
-    zipAfterPublish: True
+    zipAfterPublish: false
 - task: PublishBuildArtifacts@1
   displayName: 'Upload Release'
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'coredep'
+- task: OctopusPack@4
+  inputs:
+    PackageId: 'CoreDep'
+    PackageFormat: 'NuPkg'
+    PackageVersion: '1.0.$(Build.BuildId)'
+    SourcePath: '$(Build.ArtifactStagingDirectory)'
+- task: OctopusPush@4
+  inputs:
+    OctoConnectedServiceName: 'MadhonOctopus'
+    Space: 'Spaces-1'
+    Package: 'CoreDep.1.0.$(Build.BuildId).nupkg'
+    Replace: 'false'
