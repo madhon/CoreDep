@@ -1,13 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net50</TargetFramework>
-    <RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
+    <TargetFramework>net60</TargetFramework>
+	  <LangVersion>latest</LangVersion>
+	  <TieredCompilation>true</TieredCompilation>
+	  <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+	  <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+	  <Nullable>enable</Nullable>
+	  <ImplicitUsings>enable</ImplicitUsings>
+    <RuntimeIdentifiers>win10-x64;linux-x64;alpine-x64</RuntimeIdentifiers>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <UserSecretsId>7cddbb8b-91fb-47b8-bf0d-eea571174349</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="5.0.1" />
-    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.1.0">
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders.TagHelpers" Version="0.16.1" />
+    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
