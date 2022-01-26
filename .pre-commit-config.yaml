@@ -1,11 +1,11 @@
 repos:
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 7573d16
+    rev: 297ff78
     hooks:
       - id: commitizen
         stages: [commit-msg]
   -   repo: https://github.com/thoughtworks/talisman
-      rev: bf3f7b8
+      rev: cdc8d06
       hooks:
       -   id: talisman-commit
           name: talisman
