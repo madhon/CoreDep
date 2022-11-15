@@ -1,6 +1,17 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Microsoft.AspNetCore.HttpOverrides;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(o => o.AddServerHeader = false);
 
 
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -16,9 +27,11 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UsePathBase("/coredep");
+    //app.UsePathBase("/coredep");
     app.UseExceptionHandler("/Home/Error");
 }
+
+app.UseForwardedHeaders();
 
 app.UseStaticFiles();
 
