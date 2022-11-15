@@ -37,5 +37,5 @@ steps:
 - task: PublishPipelineArtifact@1
   displayName: 'Upload Release'
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'coredep'
