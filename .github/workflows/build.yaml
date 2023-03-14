@@ -30,10 +30,10 @@ jobs:
       run: dotnet restore src/CoreDep/CoreDep.csproj
 
     - name: DotNet build
-      run: dotnet build src/CoreDep/CoreDep.csproj --configuration Release --no-restore
+      run: dotnet build src/CoreDep/CoreDep.csproj --r linux-x64 --configuration Release --no-restore -p:PublishReadyToRun=true
 
     - name: DotNet Publish
-      run: dotnet publish src/CoreDep/CoreDep.csproj --configuration Release --output ${{env.DOTNET_ROOT}}/myapp --no-restore --no-build
+      run: dotnet publish src/CoreDep/CoreDep.csproj --r linux-x64 --configuration Release --output ${{env.DOTNET_ROOT}}/myapp --no-restore --no-build -p:PublishReadyToRun=true
 
     - name: Upload Release
       uses: actions/upload-artifact@v3
@@ -48,6 +48,7 @@ jobs:
     needs: build
     environment:
       name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
