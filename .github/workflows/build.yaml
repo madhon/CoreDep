@@ -4,7 +4,6 @@ env:
   AZURE_WEBAPP_NAME: coredep
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   DOTNET_VERSION: '7'
-  IMAGE_RUNON: 'ubuntu-20.04'
 
 on:
   push:
@@ -17,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ${{ env.IMAGE_RUNON }}
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
@@ -45,7 +44,7 @@ jobs:
   deploy:
     permissions:
       contents: none
-    runs-on: ${{ env.IMAGE_RUNON }}
+    runs-on: ubuntu-20.04
     needs: build
     environment:
       name: 'Development'
