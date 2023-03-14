@@ -36,7 +36,7 @@ jobs:
       run: dotnet publish src/CoreDep/CoreDep.csproj --configuration Release --output ${{env.DOTNET_ROOT}}/myapp --no-restore --no-build
 
     - name: Upload Release
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: ${{env.DOTNET_ROOT}}/myapp
         name: coredep
