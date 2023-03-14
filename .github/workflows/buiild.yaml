@@ -7,17 +7,23 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
     - name: Download .Net Core SDK
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+
     - name: Dotnet Restore
-      run: dotnet restore **/*.csproj
+      run: dotnet restore src/CoreDep/CoreDep.csproj
+
     - name: DotNet build
-      run: dotnet build **/*.csproj --configuration Release --no-restore
+      run: dotnet build src/CoreDep/CoreDep.csproj --configuration Release --no-restore
+
     - name: DotNet Publish
       run: dotnet publish --configuration Release --output ${{ github.workspace }} --no-restore --no-build
+
     - name: Upload Release
       uses: actions/upload-artifact@v2
       with:
