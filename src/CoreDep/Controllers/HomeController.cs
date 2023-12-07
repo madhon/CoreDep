@@ -19,6 +19,7 @@
         [AllowAnonymous()]
         public IActionResult Index()
         {
+            using var act = Program.ActivitySource.StartActivity("IndexActionResult");
             return View();
         }
 
