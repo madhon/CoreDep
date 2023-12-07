@@ -1,17 +1,17 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0  # Use the ref you want to point at
+    rev: v4.5.0  # Use the ref you want to point at
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: check-yaml
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: fb0d1eb
+    rev: a355914
     hooks:
       - id: commitizen
         stages: [commit-msg]
   -   repo: https://github.com/thoughtworks/talisman
-      rev: 04c661e
+      rev: 73c1d8a
       hooks:
       -   id: talisman-commit
           name: talisman
