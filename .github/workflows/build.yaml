@@ -26,6 +26,11 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
+    - name: Install Aspire Workload
+      run: |
+        dotnet workload update
+        dotnet workload install aspire
+
     - name: DotNet build
       run: dotnet build src/CoreDep/CoreDep.csproj -r linux-x64 --configuration Release --self-contained -p:PublishReadyToRun=true
 

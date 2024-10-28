@@ -14,9 +14,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 builder.Services.AddControllersWithViews();
 
-
 var app = builder.Build();
-
 
 app.UseSecurityHeaders();
 
@@ -43,7 +41,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
 
 public static partial class Program
 {
