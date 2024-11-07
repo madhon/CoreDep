@@ -8,13 +8,14 @@
 	<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
-    <RuntimeIdentifiers>win-x64;linux-x64;linux-musl-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
     <UserSecretsId>7cddbb8b-91fb-47b8-bf0d-eea571174349</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Telemetry.Abstractions" Version="8.10.0" />
@@ -49,7 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Coredep.ServiceDefaults\Coredep.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Coredep.ServiceDefaults\Coredep.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
