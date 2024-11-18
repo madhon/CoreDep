@@ -3,7 +3,7 @@ name: Build and Deploy to Azure Web App
 env:
   AZURE_WEBAPP_NAME: coredep
   AZURE_WEBAPP_PACKAGE_PATH: '.'
-  DOTNET_VERSION: '8'
+  DOTNET_VERSION: '9'
 
 on:
   push:
