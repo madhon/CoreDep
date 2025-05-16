@@ -1,8 +1,6 @@
 ﻿namespace CoreDep;
 
 using Pulumi;
-using Pulumi.AzureNative.Web.Inputs;
-using Random = Pulumi.Random;
 using AzureNativeResources = Pulumi.AzureNative.Resources;
 using AzureNativeWeb = Pulumi.AzureNative.Web;
 
@@ -45,7 +43,7 @@ public class CoreDepStack : Stack
                 },
             });
 
-            const string imageInDockerHub = "madhon/madhonsite:1120";
+            const string imageInDockerHub = "madhon/madhonsite:1219";
 
             var coreDepDiagConfig = new AzureNativeWeb.WebAppDiagnosticLogsConfiguration($"{AppServiceBaseName}-{env}",
                 new AzureNativeWeb.WebAppDiagnosticLogsConfigurationArgs
