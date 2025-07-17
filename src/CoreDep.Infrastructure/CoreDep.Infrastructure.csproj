@@ -7,8 +7,8 @@
 		<RootNamespace>CoreDep</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Pulumi" Version="3.81.0" />
-		<PackageReference Include="Pulumi.AzureNative" Version="3.4.0" />
+		<PackageReference Include="Pulumi" Version="3.85.1" />
+		<PackageReference Include="Pulumi.AzureNative" Version="3.5.1" />
 		<PackageReference Include="Pulumi.Random" Version="4.18.2" />
 	</ItemGroup>
 
