@@ -1,6 +1,7 @@
 ﻿namespace CoreDep;
 
 using Pulumi;
+using Pulumi.AzureNative.Web.Inputs;
 using AzureNativeResources = Pulumi.AzureNative.Resources;
 using AzureNativeWeb = Pulumi.AzureNative.Web;
 
@@ -36,21 +37,19 @@ public class CoreDepStack : Stack
                 Location = resourceGroup .Location,
                 ResourceGroupName = resourceGroup.Name,
                 Kind = "Linux",
-                Sku = new AzureNativeWeb.Inputs.SkuDescriptionArgs
+                Sku = new SkuDescriptionArgs
                 {
                     Size = appServicePlanSize,
                     Tier = appServicePlanTier,
+                    Name = appServicePlanSize,
                 },
+            }, new CustomResourceOptions()
+            {
+                Protect = false,
             });
 
-            const string imageInDockerHub = "madhon/madhonsite:1219";
-
-            var coreDepDiagConfig = new AzureNativeWeb.WebAppDiagnosticLogsConfiguration($"{AppServiceBaseName}-{env}",
-                new AzureNativeWeb.WebAppDiagnosticLogsConfigurationArgs
-                {
-                    Name = $"{AppServiceBaseName}-{env}",
-                    ResourceGroupName = resourceGroup.Name,
-                });
+            const string imageInDockerHub = "madhon/madhonsite:1450";
+            const string fullImageUri = "index.docker.io/madhon/madhonsite:1450";
 
             var coreDepApp = new AzureNativeWeb.WebApp($"{AppServiceBaseName}-{env}", new AzureNativeWeb.WebAppArgs
             {
@@ -58,33 +57,81 @@ public class CoreDepStack : Stack
                 Location = resourceGroup.Location,
                 ResourceGroupName = resourceGroup.Name,
                 ServerFarmId = appServicePlan.Id,
-                Identity = new AzureNativeWeb.Inputs.ManagedServiceIdentityArgs
+                Identity = new ManagedServiceIdentityArgs
                 {
                     Type = AzureNativeWeb.ManagedServiceIdentityType.SystemAssigned,
                     //UserAssignedIdentities = new [] { "userAssignedIdentityId" },
                 },
-                SiteConfig = new AzureNativeWeb.Inputs.SiteConfigArgs
+                SiteConfig = new SiteConfigArgs
                 {
                     AppSettings = new []
                     {
-                        new AzureNativeWeb.Inputs.NameValuePairArgs
+                        new NameValuePairArgs
                         {
                             Name = "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
                             Value = "false",
                         },
                     },
                     AlwaysOn = false,
-                    Use32BitWorkerProcess = false,
-                    MinTlsVersion = "1.2",
+                    Use32BitWorkerProcess = true, // has to be 32bit for Free tier
+                    MinTlsVersion = AzureNativeWeb.SupportedTlsVersions.SupportedTlsVersions_1_2,
                     Http20Enabled = true,
                     RemoteDebuggingEnabled = false,
-                    FtpsState = "Disabled",
-                    LinuxFxVersion = $"DOCKER|{imageInDockerHub}",
+                    FtpsState = AzureNativeWeb.FtpsState.Disabled,
+                    LinuxFxVersion = $"sitecontainers",
                 },
+                Kind = "app,linux",
+                HyperV = false,
                 HttpsOnly = true,
+            }, new CustomResourceOptions
+            {
+                Protect = false,
             });
+            
+            var coreDepDiagConfig = new AzureNativeWeb.WebAppDiagnosticLogsConfiguration($"{AppServiceBaseName}-{env}",
+                new AzureNativeWeb.WebAppDiagnosticLogsConfigurationArgs
+                {
+                    Name = coreDepApp.Name,
+                    ResourceGroupName = resourceGroup.Name,
+                    ApplicationLogs = new ApplicationLogsConfigArgs
+                    {
+                       FileSystem = new FileSystemApplicationLogsConfigArgs
+                       {
+                           Level = AzureNativeWeb.LogLevel.Error,
+                       }
+                    },
+                    HttpLogs = new HttpLogsConfigArgs
+                    {
+                        FileSystem = new FileSystemHttpLogsConfigArgs
+                        {
+                            Enabled = false,
+                            RetentionInDays = 10,
+                            RetentionInMb = 35,
+                        },
+                    },
+                }, new CustomResourceOptions
+                {
+                    DependsOn= coreDepApp,
+                    Protect = false,
+                });
 
-
+            var container = new AzureNativeWeb.WebAppSiteContainer($"{AppServiceBaseName}-{env}",
+                new AzureNativeWeb.WebAppSiteContainerArgs
+                {
+                    Name = coreDepApp.Name,
+                    ContainerName = "main",
+                    ResourceGroupName = resourceGroup.Name,
+                    Image = imageInDockerHub,
+                    IsMain = true,
+                    TargetPort = "8080",
+                    Kind = "app,linux,container",
+                }, new CustomResourceOptions
+                {
+                    DependsOn= coreDepApp,
+                    Protect = false,
+                }
+            );
+            
         this.CoreDepEndpoint = Output.Format($"https://{coreDepApp.DefaultHostName}");
     }
 }

@@ -5,6 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(o => o.AddServerHeader = false);
 
+builder.Host.UseDefaultServiceProvider((_, options) =>
+{
+    options.ValidateScopes = true;
+    options.ValidateOnBuild = true;
+});
+
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.KnownNetworks.Clear();

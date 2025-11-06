@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/build.yaml" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="src/CoreDep.AppHost/CoreDep.AppHost.csproj" />
+  <Project Path="src/CoreDep.Infrastructure/CoreDep.Infrastructure.csproj" />
+  <Project Path="src/Coredep.ServiceDefaults/Coredep.ServiceDefaults.csproj" />
+  <Project Path="src/CoreDep/CoreDep.csproj" />
+</Solution>
