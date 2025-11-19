@@ -13,7 +13,7 @@ builder.Host.UseDefaultServiceProvider((_, options) =>
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    options.KnownNetworks.Clear();
+    options.KnownIPNetworks.Clear();
     options.KnownProxies.Clear();
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });

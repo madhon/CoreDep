@@ -3,7 +3,7 @@ name: Build and Deploy to Azure Web App
 env:
   AZURE_WEBAPP_NAME: coredep
   AZURE_WEBAPP_PACKAGE_PATH: '.'
-  DOTNET_VERSION: '9'
+  DOTNET_VERSION: '10'
 
 on:
   push:
@@ -16,20 +16,15 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Download .Net Core SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-
-    - name: Install Aspire Workload
-      run: |
-        dotnet workload update
-        dotnet workload install aspire
 
     - name: DotNet build
       run: dotnet build src/CoreDep/CoreDep.csproj -r linux-x64 --configuration Release --self-contained -p:PublishReadyToRun=true
@@ -38,7 +33,7 @@ jobs:
       run: dotnet publish src/CoreDep/CoreDep.csproj -r linux-x64 --configuration Release --output ${{env.DOTNET_ROOT}}/myapp --no-build --self-contained -p:PublishReadyToRun=true
 
     - name: Upload Release
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         path: ${{env.DOTNET_ROOT}}/myapp
         name: coredep
@@ -46,7 +41,7 @@ jobs:
   deploy:
     permissions:
       contents: none
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: build
     environment:
       name: 'Development'
@@ -54,7 +49,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: coredep
 

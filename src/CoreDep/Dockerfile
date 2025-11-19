@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-azurelinux3.0-distroless AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-azurelinux3.0-distroless AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0 AS build
 WORKDIR /src
 COPY ["CoreDep.csproj", "CoreDep.csproj"]
 RUN dotnet restore "CoreDep.csproj"

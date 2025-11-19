@@ -87,7 +87,7 @@ public class CoreDepStack : Stack
             {
                 Protect = false,
             });
-            
+
             var coreDepDiagConfig = new AzureNativeWeb.WebAppDiagnosticLogsConfiguration($"{AppServiceBaseName}-{env}",
                 new AzureNativeWeb.WebAppDiagnosticLogsConfigurationArgs
                 {
@@ -131,7 +131,7 @@ public class CoreDepStack : Stack
                     Protect = false,
                 }
             );
-            
+
         this.CoreDepEndpoint = Output.Format($"https://{coreDepApp.DefaultHostName}");
     }
 }
