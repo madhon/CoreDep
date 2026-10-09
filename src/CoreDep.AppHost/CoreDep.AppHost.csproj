@@ -1,4 +1,4 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.4.6">
+<Project Sdk="Aspire.AppHost.Sdk/13.6.1">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -9,6 +9,10 @@
         <UserSecretsId>cbf845b1-9132-44d2-9430-37a570bd5470</UserSecretsId>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <AspireUseCliBundle>true</AspireUseCliBundle>
+    </PropertyGroup>    
+    
     <ItemGroup>
       <ProjectReference Include="..\CoreDep\CoreDep.csproj" />
     </ItemGroup>
