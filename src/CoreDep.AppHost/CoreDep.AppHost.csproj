@@ -11,8 +11,8 @@
 
     <PropertyGroup>
         <AspireUseCliBundle>true</AspireUseCliBundle>
-    </PropertyGroup>    
-    
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\CoreDep\CoreDep.csproj" />
     </ItemGroup>
